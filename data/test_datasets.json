@@ -1,0 +1,92 @@
+[
+  {
+    "question": "What is machine learning?",
+    "expected_answer": "Machine learning is a subset of artificial intelligence (AI) that enables computers to learn and make decisions from data without being explicitly programmed for every task. It involves algorithms that can identify patterns in data and make predictions or decisions based on those patterns.",
+    "contexts": ["machine_learning_basics.md"],
+    "category": "definition"
+  },
+  {
+    "question": "What are the three main types of machine learning?",
+    "expected_answer": "The three main types of machine learning are: 1) Supervised Learning - uses labeled data to train models, 2) Unsupervised Learning - finds hidden patterns in data without labeled examples, and 3) Reinforcement Learning - involves an agent learning to make decisions by interacting with an environment and receiving rewards or penalties.",
+    "contexts": ["machine_learning_basics.md"],
+    "category": "classification"
+  },
+  {
+    "question": "What is deep learning and how does it differ from traditional machine learning?",
+    "expected_answer": "Deep learning is a subset of machine learning that uses artificial neural networks with multiple layers (hence 'deep') to model and understand complex patterns in data. It's inspired by the structure and function of the human brain. Unlike traditional machine learning, deep learning can automatically learn features from raw data without manual feature engineering.",
+    "contexts": ["deep_learning_guide.md"],
+    "category": "comparison"
+  },
+  {
+    "question": "What are the common activation functions used in neural networks?",
+    "expected_answer": "Common activation functions include: ReLU (Rectified Linear Unit) f(x) = max(0, x), Sigmoid f(x) = 1 / (1 + e^(-x)), Tanh f(x) = (e^x - e^(-x)) / (e^x + e^(-x)), and Softmax which is used in the output layer for multi-class classification.",
+    "contexts": ["deep_learning_guide.md"],
+    "category": "technical_details"
+  },
+  {
+    "question": "What are the main steps in the data science workflow?",
+    "expected_answer": "The main steps in the data science workflow are: 1) Problem Definition, 2) Data Collection, 3) Exploratory Data Analysis (EDA), 4) Data Cleaning and Preprocessing, 5) Feature Engineering, 6) Model Development, 7) Model Evaluation, 8) Model Interpretation, 9) Deployment, and 10) Monitoring and Maintenance.",
+    "contexts": ["data_science_workflow.md"],
+    "category": "process"
+  },
+  {
+    "question": "What is the purpose of cross-validation in machine learning?",
+    "expected_answer": "Cross-validation is a technique to assess model performance by training and testing on different subsets of data. It helps ensure that the model generalizes well to unseen data and provides a more reliable estimate of model performance than a single train-test split.",
+    "contexts": ["machine_learning_basics.md"],
+    "category": "evaluation"
+  },
+  {
+    "question": "What are the differences between CNNs and RNNs?",
+    "expected_answer": "CNNs (Convolutional Neural Networks) are specialized for processing grid-like data such as images and use convolutional layers, pooling layers, and fully connected layers. RNNs (Recurrent Neural Networks) are designed for sequential data with connections that create loops, making them suitable for tasks like natural language processing and time series forecasting.",
+    "contexts": ["deep_learning_guide.md"],
+    "category": "architecture_comparison"
+  },
+  {
+    "question": "How do you handle missing values in a dataset?",
+    "expected_answer": "Missing values can be handled through several strategies: Deletion (remove rows/columns with missing values), Imputation (fill with mean, median, mode, or predicted values), creating Indicator Variables (flags for missing values), or using domain-specific business logic to fill missing values appropriately.",
+    "contexts": ["data_science_workflow.md"],
+    "category": "data_preprocessing"
+  },
+  {
+    "question": "What is the difference between overfitting and underfitting?",
+    "expected_answer": "Overfitting occurs when a model learns the training data too well and fails to generalize to new data. Underfitting occurs when a model is too simple to capture the underlying patterns in the data. Overfitting can be addressed with regularization, cross-validation, and more training data, while underfitting can be solved by increasing model complexity or adding more features.",
+    "contexts": ["machine_learning_basics.md"],
+    "category": "model_problems"
+  },
+  {
+    "question": "What are Python dictionaries and how are they used?",
+    "expected_answer": "Python dictionaries are data structures that store key-value pairs. They are created using curly braces {} and allow you to access values using keys. Dictionary operations include accessing values with person['key'], adding new key-value pairs, deleting keys with del, and getting all keys, values, or items using .keys(), .values(), and .items() methods.",
+    "contexts": ["python_programming.md"],
+    "category": "programming_concepts"
+  },
+  {
+    "question": "What is transfer learning in deep learning?",
+    "expected_answer": "Transfer learning is the practice of using pre-trained models as starting points for new tasks. It offers benefits like faster training, better performance with less data, and lower computational requirements. Common approaches include feature extraction, fine-tuning, and domain adaptation.",
+    "contexts": ["deep_learning_guide.md"],
+    "category": "advanced_techniques"
+  },
+  {
+    "question": "What metrics are used to evaluate classification models?",
+    "expected_answer": "Classification models are evaluated using metrics such as Accuracy (correct predictions / total predictions), Precision (True Positives / (True Positives + False Positives)), Recall (True Positives / (True Positives + False Negatives)), F1-Score (harmonic mean of precision and recall), and ROC-AUC (Area under the ROC curve).",
+    "contexts": ["machine_learning_basics.md"],
+    "category": "evaluation_metrics"
+  },
+  {
+    "question": "What is exploratory data analysis and why is it important?",
+    "expected_answer": "Exploratory Data Analysis (EDA) involves initial data assessment including basic data exploration, univariate analysis (distribution analysis, central tendency), bivariate analysis (correlation analysis, scatter plots), and multivariate analysis (correlation matrices, PCA). It's important for understanding data patterns, identifying issues, and informing subsequent analysis decisions.",
+    "contexts": ["data_science_workflow.md"],
+    "category": "data_analysis"
+  },
+  {
+    "question": "How do you create and use functions in Python?",
+    "expected_answer": "Python functions are defined using the 'def' keyword followed by the function name and parameters. They can include optional docstrings for documentation and return values. Functions support advanced features like *args and **kwargs for flexible parameters, lambda functions for simple operations, and can be used with higher-order functions like map and filter.",
+    "contexts": ["python_programming.md"],
+    "category": "programming_syntax"
+  },
+  {
+    "question": "What are the challenges in training deep neural networks?",
+    "expected_answer": "Common challenges include vanishing gradients (gradients become very small in deep networks), exploding gradients (gradients become very large causing unstable training), and significant computational requirements. Solutions include using better activation functions like ReLU, batch normalization, skip connections, gradient clipping, and GPU acceleration.",
+    "contexts": ["deep_learning_guide.md"],
+    "category": "training_challenges"
+  }
+]
