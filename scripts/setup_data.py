@@ -4,10 +4,13 @@ import os
 import sys
 from pathlib import Path
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+# Añadir el directorio padre al path para poder importar src
+parent_dir = Path(__file__).parent.parent
+sys.path.insert(0, str(parent_dir))
 
-from src.document_processor import DocumentProcessor
-from src.vector_store import MongoVectorStore
+# Ahora importar las clases actualizadas con soporte RoBERTa
+from src.document_processor_roberta import DocumentProcessorRoBERTa
+from src.vector_store_roberta import MongoVectorStoreRoBERTa
 from src.config import settings
 import logging
 
@@ -19,21 +22,29 @@ def setup_vector_database():
     logger.info("Setting up vector database with sample documents...")
 
     try:
-        processor = DocumentProcessor(
+        processor = DocumentProcessorRoBERTa(
+            use_roberta=settings.use_roberta,
             embedding_model=settings.embedding_model,
             chunk_size=settings.chunk_size,
             chunk_overlap=settings.chunk_overlap
         )
 
-        vector_store = MongoVectorStore(
+        vector_store = MongoVectorStoreRoBERTa(
             mongodb_uri=settings.mongodb_uri,
             database_name=settings.mongodb_database,
             collection_name=settings.mongodb_collection,
-            embedding_model=settings.embedding_model
+            use_roberta=settings.use_roberta,
+            embedding_model=settings.embedding_model,
+            device=settings.roberta_device,
+            batch_size=settings.roberta_batch_size
         )
 
-        if not vector_store.health_check():
-            logger.error("Cannot connect to MongoDB. Please ensure MongoDB is running.")
+        # Verificar conexión a MongoDB
+        try:
+            stats = vector_store.get_collection_stats()
+            logger.info(f"Conectado a MongoDB. Documentos actuales: {stats['total_documents']}")
+        except Exception as e:
+            logger.error(f"Cannot connect to MongoDB: {e}")
             return False
 
         documents_dir = os.path.join(os.path.dirname(__file__), '..', 'data', 'documents')
@@ -74,11 +85,14 @@ def verify_setup():
     logger.info("Verifying setup...")
 
     try:
-        vector_store = MongoVectorStore(
+        vector_store = MongoVectorStoreRoBERTa(
             mongodb_uri=settings.mongodb_uri,
             database_name=settings.mongodb_database,
             collection_name=settings.mongodb_collection,
-            embedding_model=settings.embedding_model
+            use_roberta=settings.use_roberta,
+            embedding_model=settings.embedding_model,
+            device=settings.roberta_device,
+            batch_size=settings.roberta_batch_size
         )
 
         stats = vector_store.get_collection_stats()

@@ -1,18 +1,24 @@
 import unittest
 import sys
 import os
+from pathlib import Path
 from unittest.mock import Mock, patch
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+# Añadir el directorio padre al path
+parent_dir = Path(__file__).parent.parent
+sys.path.insert(0, str(parent_dir))
 
+# Importar las clases actualizadas
 from src.rag_system import RAGSystem
-from src.vector_store import MongoVectorStore
-from src.document_processor import DocumentProcessor
+from src.vector_store_roberta import MongoVectorStoreRoBERTa
+from src.document_processor_roberta import DocumentProcessorRoBERTa
+from src.config import settings
 
 
 class TestDocumentProcessor(unittest.TestCase):
     def setUp(self):
-        self.processor = DocumentProcessor(
+        self.processor = DocumentProcessorRoBERTa(
+            use_roberta=False,  # Usar SentenceTransformers para tests rápidos
             embedding_model="all-MiniLM-L6-v2",
             chunk_size=100,
             chunk_overlap=20
@@ -37,11 +43,13 @@ class TestDocumentProcessor(unittest.TestCase):
         chunks = [
             {
                 "chunk_id": "test_chunk_1",
-                "content": "This is test content one"
+                "chunk_text": "This is test content one",
+                "chunk_index": 0
             },
             {
                 "chunk_id": "test_chunk_2",
-                "content": "This is test content two"
+                "chunk_text": "This is test content two",
+                "chunk_index": 1
             }
         ]
 
@@ -55,7 +63,7 @@ class TestDocumentProcessor(unittest.TestCase):
 
 class TestRAGSystem(unittest.TestCase):
     def setUp(self):
-        self.mock_vector_store = Mock(spec=MongoVectorStore)
+        self.mock_vector_store = Mock(spec=MongoVectorStoreRoBERTa)
         self.rag_system = RAGSystem(self.mock_vector_store)
 
     @patch('google.generativeai.GenerativeModel')
@@ -67,9 +75,10 @@ class TestRAGSystem(unittest.TestCase):
         mock_retrieved_docs = [
             {
                 "chunk_id": "doc1_chunk1",
-                "content": "Machine learning is artificial intelligence",
+                "chunk_text": "Machine learning is artificial intelligence",
                 "similarity": 0.85,
-                "filename": "ml_basics.md"
+                "doc_path": "ml_basics.md",
+                "chunk_index": 0
             }
         ]
 

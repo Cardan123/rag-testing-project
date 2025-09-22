@@ -1,6 +1,6 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Union
 import google.generativeai as genai
-from .vector_store import MongoVectorStore
+from .vector_store_roberta import MongoVectorStoreRoBERTa
 from .config import settings
 import logging
 
@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class RAGSystem:
-    def __init__(self, vector_store: MongoVectorStore):
+    def __init__(self, vector_store: Union[MongoVectorStoreRoBERTa, Any]):
         self.vector_store = vector_store
         genai.configure(api_key=settings.gemini_api_key)
         self.model = genai.GenerativeModel(settings.gemini_model)
@@ -71,8 +71,10 @@ Answer:"""
 
         context_parts = []
         for i, doc in enumerate(docs, 1):
-            source = doc.get('filename', 'Unknown source')
-            content = doc.get('content', '')
+            # Usar doc_path o filename, lo que esté disponible
+            source = doc.get('doc_path', doc.get('filename', 'Unknown source'))
+            # Usar chunk_text o content, lo que esté disponible
+            content = doc.get('chunk_text', doc.get('content', ''))
             similarity = doc.get('similarity', 0)
 
             context_parts.append(
